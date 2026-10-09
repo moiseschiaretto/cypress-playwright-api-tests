@@ -1,0 +1,70 @@
+name: Testes de API — Cypress e Playwright
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Rodar testes de API no Cypress
+        run: npm run cy:test
+
+      - name: Gerar relatório Allure do Cypress
+        if: always()
+        run: npx allure generate allure-results/cypress --clean --single-file -o allure-report/cypress --name Cypress-API
+
+      - name: Publicar relatórios do Cypress
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorios-cypress
+          path: |
+            reports/cypress/
+            allure-report/cypress/
+          retention-days: 30
+
+  playwright:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Instalar dependências
+        run: npm ci
+
+      # Testes de API não abrem navegador: não é preciso instalar o Chromium
+      - name: Rodar testes de API no Playwright
+        run: npm run pw:test
+
+      - name: Gerar relatório Allure do Playwright
+        if: always()
+        run: npx allure generate allure-results/playwright --clean --single-file -o allure-report/playwright --name Playwright-API
+
+      - name: Publicar relatórios do Playwright
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorios-playwright
+          path: |
+            reports/playwright/
+            allure-report/playwright/
+          retention-days: 30

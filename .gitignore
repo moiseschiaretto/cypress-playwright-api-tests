@@ -1,0 +1,8 @@
+node_modules/
+reports/
+allure-results/
+allure-report/
+test-results/
+playwright-report/
+cypress/screenshots/
+cypress/videos/

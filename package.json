@@ -1,0 +1,31 @@
+{
+  "name": "cypress-playwright-api-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Testes de API REST com Cypress e Playwright: 66 cenários de dados, schema, contrato, autenticação, CRUD e cenários negativos, com Allure Report",
+  "author": "Moisés Chiaretto",
+  "license": "ISC",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:test": "cypress run",
+    "pw:test": "playwright test",
+    "pw:report": "playwright show-report reports/playwright",
+    "allure:cy": "allure generate allure-results/cypress --clean --single-file -o allure-report/cypress --name Cypress-API && allure open allure-report/cypress",
+    "allure:pw": "allure generate allure-results/playwright --clean --single-file -o allure-report/playwright --name Playwright-API && allure open allure-report/playwright"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "allure-commandline": "^2.46.1",
+    "allure-cypress": "^3.11.1",
+    "allure-js-commons": "^3.11.1",
+    "allure-playwright": "^3.11.1",
+    "cypress": "^15.21.1",
+    "cypress-mochawesome-reporter": "^5.0.0",
+    "cypress-on-fix": "^1.1.0"
+  },
+  "allowScripts": {
+    "cypress@15.21.1": true
+  }
+}
